@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.2.RELEASE'
+		springBootVersion = '2.2.1.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -35,4 +35,6 @@ dependencies {
 	compile('io.springfox:springfox-swagger-ui:2.7.0')
 	compile('com.google.code.gson:gson:2.8.2')
 	compile('org.springframework.boot:spring-boot-starter-actuator')
+	implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
+	implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
 }
