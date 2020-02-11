@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static java.util.Optional.ofNullable;
-
 @Service
 public class TrelloService {
 
@@ -22,7 +20,6 @@ public class TrelloService {
     }
 
     public CreatedTrelloCardDto createTrelloCard(final TrelloCardDto trelloCardDto) {
-
         return trelloClient.createNewCard(trelloCardDto);
     }
 }
