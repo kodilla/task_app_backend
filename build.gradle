@@ -1,12 +1,18 @@
 buildscript {
 	ext {
-		springBootVersion = '2.2.1.RELEASE'
+		springBootVersion = '2.4.5'
+		propFile = file("src/main/resources/application.properties")
+		prop = new Properties()
+		prop.load(new FileInputStream(propFile))
+		propertySubdomain = prop.getProperty("tunnel.subdomain")
 	}
 	repositories {
 		mavenCentral()
+		gradlePluginPortal()
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "com.github.node-gradle:gradle-node-plugin:3.5.1"
 	}
 }
 
@@ -14,27 +20,38 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.github.node-gradle.node'
 
 group = 'com.crud'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
+sourceCompatibility = 17
 
 repositories {
 	mavenCentral()
 }
 
+node {
+	version = '16.14.1'
+	download = true
+}
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	compile('org.projectlombok:lombok')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('mysql:mysql-connector-java')
-	compile('org.springframework.boot:spring-boot-starter-mail:1.5.7.RELEASE')
-	compile('io.springfox:springfox-swagger2:2.7.0')
-	compile('io.springfox:springfox-swagger-ui:2.7.0')
-	compile('com.google.code.gson:gson:2.8.2')
-	compile('org.springframework.boot:spring-boot-starter-actuator')
+	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+	implementation 'org.gradle:gradle-tooling-api:7.3-20210825160000+0000'
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	implementation('org.projectlombok:lombok')
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation('mysql:mysql-connector-java')
+	implementation('org.springframework.boot:spring-boot-starter-mail:1.5.7.RELEASE')
+	implementation('io.springfox:springfox-swagger2:2.7.0')
+	implementation('io.springfox:springfox-swagger-ui:2.7.0')
+	implementation('com.google.code.gson:gson:2.8.2')
+	implementation('org.springframework.boot:spring-boot-starter-actuator')
 	implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
 	implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
+}
+
+task tunnel(type: NodeTask, dependsOn: 'npmInstall') {
+	script = file('src/main/resources/runTunnel.js')
+	args = [propertySubdomain]
 }
