@@ -1,16 +1,17 @@
 package com.crud.tasks.mapper;
 
 import com.crud.tasks.domain.*;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@ExtendWith(MockitoExtension.class)
 public class TrelloMapperTestSuite {
 
     @InjectMocks
@@ -35,7 +36,7 @@ public class TrelloMapperTestSuite {
         trelloBoardDtoList.add(trelloBoardDto2);
         List<TrelloBoard> resultList = trelloMapper.mapToBoards(trelloBoardDtoList);
 
-        Assert.assertEquals(2, resultList.size());
+        assertEquals(2, resultList.size());
     }
 
     @Test
@@ -57,7 +58,7 @@ public class TrelloMapperTestSuite {
         trelloBoardList.add(trelloBoard2);
         List<TrelloBoardDto> resultList = trelloMapper.mapToBoardsDto(trelloBoardList);
 
-        Assert.assertEquals(2, resultList.size());
+        assertEquals(2, resultList.size());
     }
 
     @Test
@@ -69,7 +70,7 @@ public class TrelloMapperTestSuite {
 
         List<TrelloListDto> resultList = trelloMapper.mapToListDto(list1);
 
-        Assert.assertEquals(3, resultList.size());
+        assertEquals(3, resultList.size());
     }
 
     @Test
@@ -81,7 +82,7 @@ public class TrelloMapperTestSuite {
 
         List<TrelloList> resultList = trelloMapper.mapToList(list1);
 
-        Assert.assertEquals(3, resultList.size());
+        assertEquals(3, resultList.size());
     }
 
     @Test
@@ -89,7 +90,7 @@ public class TrelloMapperTestSuite {
         TrelloCard card = new TrelloCard("karta", "taka karta", "pos", "1");
         TrelloCardDto cardDto = trelloMapper.mapToCardDto(card);
 
-        Assert.assertEquals("karta", cardDto.getName());
+        assertEquals("karta", cardDto.getName());
     }
 
     @Test
@@ -97,7 +98,7 @@ public class TrelloMapperTestSuite {
         TrelloCardDto cardDto = new TrelloCardDto("karta", "taka karta", "pos", "1");
         TrelloCard card = trelloMapper.mapToCard(cardDto);
 
-        Assert.assertEquals("1", card.getListId());
+        assertEquals("1", card.getListId());
     }
 
 }

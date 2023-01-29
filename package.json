@@ -1,0 +1,7 @@
+{
+  "name": "spring-app-tunneling",
+  "version": "0.0.0",
+  "dependencies": {
+    "localtunnel": "2.0.2"
+  }
+}
