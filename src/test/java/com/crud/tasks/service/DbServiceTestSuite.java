@@ -3,23 +3,24 @@ package com.crud.tasks.service;
 
 import com.crud.tasks.domain.Task;
 import com.crud.tasks.repository.TaskRepository;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.internal.verification.VerificationModeFactory.atLeastOnce;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class DbServiceTestSuite {
 
     @InjectMocks
@@ -34,7 +35,7 @@ public class DbServiceTestSuite {
         listOfTasks.add(new Task(1L, "sprzatanie", "mycie kafelków"));
         when(dbService.getAllTasks()).thenReturn(listOfTasks);
         List<Task> resultList = dbService.getAllTasks();
-        Assert.assertEquals(1, resultList.size());
+        assertEquals(1, resultList.size());
     }
 
     @Test
@@ -42,7 +43,7 @@ public class DbServiceTestSuite {
         Task task = new Task(1L, "sprzatanie", "mycie kafelków");
         when(dbService.saveTask(task)).thenReturn(task);
         Task result = dbService.saveTask(task);
-        Assert.assertEquals("sprzatanie", result.getTitle());
+        assertEquals("sprzatanie", result.getTitle());
     }
 
     @Test
@@ -50,7 +51,7 @@ public class DbServiceTestSuite {
         Task task = new Task(1L, "sprzatanie", "mycie kafelków");
         when(dbService.getTaskById(task.getId())).thenReturn(Optional.ofNullable(task));
         Optional<Task> result = dbService.getTaskById(task.getId());
-        Assert.assertTrue("optional żyje", result.isPresent());
+        assertTrue("optional żyje", result.isPresent());
     }
 
     @Test

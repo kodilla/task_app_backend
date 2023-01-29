@@ -2,18 +2,19 @@ package com.crud.tasks.mapper;
 
 import com.crud.tasks.domain.Task;
 import com.crud.tasks.domain.TaskDto;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class TaskMapperTestSuite {
 
     @Autowired
@@ -23,14 +24,14 @@ public class TaskMapperTestSuite {
     public void testMapToTask() {
         TaskDto taskDto = new TaskDto(2L, "tytul", "cos_tam");
         Task result = taskMapper.mapToTask(taskDto);
-        Assert.assertEquals("tytul", result.getTitle());
+        assertEquals("tytul", result.getTitle());
     }
 
     @Test
     public void testMapToTaskDto() {
         Task task = new Task(2L, "tytul", "cos_tam");
         TaskDto result = taskMapper.mapToTaskDto(task);
-        Assert.assertEquals("tytul", result.getTitle());
+        assertEquals("tytul", result.getTitle());
     }
 
     @Test
@@ -38,6 +39,6 @@ public class TaskMapperTestSuite {
         List<Task> taskList = new ArrayList<>();
         taskList.add(new Task(2L, "tytul", "cos_tam"));
         List<TaskDto> result = taskMapper.mapToTaskDtoList(taskList);
-        Assert.assertEquals(1, result.size());
+        assertEquals(1, result.size());
     }
 }

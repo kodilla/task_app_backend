@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.4.5'
+		springBootVersion = '2.6.1'
 		propFile = file("src/main/resources/application.properties")
 		prop = new Properties()
 		prop.load(new FileInputStream(propFile))
@@ -43,15 +43,19 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-web')
 	implementation('mysql:mysql-connector-java')
 	implementation('org.springframework.boot:spring-boot-starter-mail:1.5.7.RELEASE')
-	implementation('io.springfox:springfox-swagger2:2.7.0')
-	implementation('io.springfox:springfox-swagger-ui:2.7.0')
+	implementation('io.springfox:springfox-boot-starter:3.0.0')
 	implementation('com.google.code.gson:gson:2.8.2')
-	implementation('org.springframework.boot:spring-boot-starter-actuator')
 	implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
 	implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
 task tunnel(type: NodeTask, dependsOn: 'npmInstall') {
 	script = file('src/main/resources/runTunnel.js')
 	args = [propertySubdomain]
+}
+
+test {
+	useJUnitPlatform()
 }
